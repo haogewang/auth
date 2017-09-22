@@ -1,0 +1,11 @@
+body{font-size: 14px;}
+@media (max-width: 1200px) {
+    body{font-size: 12px;}
+}
+a {cursor: pointer}
+.form-control-error{border-color: red}
+.has-error{display: none; color: red; position: absolute;}
+.alert{ position: fixed; top:0; left:0; right:0;z-index: 10000;}
+#confirm .modal-dialog { position: absolute; top:50%;left: 50%;margin-top: -89px;margin-left: -300px;}
+.table {table-layout:fixed;width: 100%}
+.table tbody tr td { white-space: nowrap; word-break: normal; line-height: 24px; box-sizing: border-box; text-overflow: ellipsis; overflow: hidden;}

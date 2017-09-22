@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.easted.edm.core.dao.TAuthmanagementMapper" >
+  <resultMap id="BaseResultMap" type="cn.easted.edm.core.model.TAuthmanagement" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="product" property="product" jdbcType="VARCHAR" />
+    <result column="serinumber" property="serinumber" jdbcType="VARCHAR" />
+    <result column="version" property="version" jdbcType="VARCHAR" />
+    <result column="date" property="date" jdbcType="TIMESTAMP" />
+    <result column="authorizationcode" property="authorizationcode" jdbcType="VARCHAR" />
+    <result column="servernumber" property="servernumber" jdbcType="VARCHAR" />
+    <result column="aclient" property="aclient" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="SMALLINT" />
+    <result column="bclient_machinecode" property="bclientMachinecode" jdbcType="VARCHAR" />
+    <result column="bauth_serilizenumber" property="bauthSerilizenumber" jdbcType="VARCHAR" />
+    <result column="contractnumber" property="contractnumber" jdbcType="VARCHAR" />
+    <result column="supervene_number" property="superveneNumber" jdbcType="VARCHAR" />
+    <result column="auth_timeout" property="authTimeout" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, name, product, serinumber, version, date, authorizationcode, servernumber, aclient, 
+    type, status, bclient_machinecode, bauth_serilizenumber, contractnumber, supervene_number, 
+    auth_timeout
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.easted.edm.core.model.TAuthmanagementExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from authmanagement
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="offset != null and offset>=0" >
+      limit #{limit} offset #{offset}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from authmanagement
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from authmanagement
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.easted.edm.core.model.TAuthmanagementExample" >
+    delete from authmanagement
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.easted.edm.core.model.TAuthmanagement" >
+    insert into authmanagement (id, name, product, 
+      serinumber, version, date, 
+      authorizationcode, servernumber, aclient, 
+      type, status, bclient_machinecode, 
+      bauth_serilizenumber, contractnumber, supervene_number, 
+      auth_timeout)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{product,jdbcType=VARCHAR}, 
+      #{serinumber,jdbcType=VARCHAR}, #{version,jdbcType=VARCHAR}, #{date,jdbcType=TIMESTAMP}, 
+      #{authorizationcode,jdbcType=VARCHAR}, #{servernumber,jdbcType=VARCHAR}, #{aclient,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR}, #{status,jdbcType=SMALLINT}, #{bclientMachinecode,jdbcType=VARCHAR}, 
+      #{bauthSerilizenumber,jdbcType=VARCHAR}, #{contractnumber,jdbcType=VARCHAR}, #{superveneNumber,jdbcType=VARCHAR}, 
+      #{authTimeout,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.easted.edm.core.model.TAuthmanagement" useGeneratedKeys="true" keyProperty="id" >
+    insert into authmanagement
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="product != null" >
+        product,
+      </if>
+      <if test="serinumber != null" >
+        serinumber,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+      <if test="date != null" >
+        date,
+      </if>
+      <if test="authorizationcode != null" >
+        authorizationcode,
+      </if>
+      <if test="servernumber != null" >
+        servernumber,
+      </if>
+      <if test="aclient != null" >
+        aclient,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="bclientMachinecode != null" >
+        bclient_machinecode,
+      </if>
+      <if test="bauthSerilizenumber != null" >
+        bauth_serilizenumber,
+      </if>
+      <if test="contractnumber != null" >
+        contractnumber,
+      </if>
+      <if test="superveneNumber != null" >
+        supervene_number,
+      </if>
+      <if test="authTimeout != null" >
+        auth_timeout,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="product != null" >
+        #{product,jdbcType=VARCHAR},
+      </if>
+      <if test="serinumber != null" >
+        #{serinumber,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="authorizationcode != null" >
+        #{authorizationcode,jdbcType=VARCHAR},
+      </if>
+      <if test="servernumber != null" >
+        #{servernumber,jdbcType=VARCHAR},
+      </if>
+      <if test="aclient != null" >
+        #{aclient,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="bclientMachinecode != null" >
+        #{bclientMachinecode,jdbcType=VARCHAR},
+      </if>
+      <if test="bauthSerilizenumber != null" >
+        #{bauthSerilizenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="contractnumber != null" >
+        #{contractnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="superveneNumber != null" >
+        #{superveneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="authTimeout != null" >
+        #{authTimeout,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.easted.edm.core.model.TAuthmanagementExample" resultType="java.lang.Integer" >
+    select count(*) from authmanagement
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update authmanagement
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.product != null" >
+        product = #{record.product,jdbcType=VARCHAR},
+      </if>
+      <if test="record.serinumber != null" >
+        serinumber = #{record.serinumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.version != null" >
+        version = #{record.version,jdbcType=VARCHAR},
+      </if>
+      <if test="record.date != null" >
+        date = #{record.date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.authorizationcode != null" >
+        authorizationcode = #{record.authorizationcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.servernumber != null" >
+        servernumber = #{record.servernumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.aclient != null" >
+        aclient = #{record.aclient,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=SMALLINT},
+      </if>
+      <if test="record.bclientMachinecode != null" >
+        bclient_machinecode = #{record.bclientMachinecode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bauthSerilizenumber != null" >
+        bauth_serilizenumber = #{record.bauthSerilizenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contractnumber != null" >
+        contractnumber = #{record.contractnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.superveneNumber != null" >
+        supervene_number = #{record.superveneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.authTimeout != null" >
+        auth_timeout = #{record.authTimeout,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update authmanagement
+    set id = #{record.id,jdbcType=BIGINT},
+      name = #{record.name,jdbcType=VARCHAR},
+      product = #{record.product,jdbcType=VARCHAR},
+      serinumber = #{record.serinumber,jdbcType=VARCHAR},
+      version = #{record.version,jdbcType=VARCHAR},
+      date = #{record.date,jdbcType=TIMESTAMP},
+      authorizationcode = #{record.authorizationcode,jdbcType=VARCHAR},
+      servernumber = #{record.servernumber,jdbcType=VARCHAR},
+      aclient = #{record.aclient,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=SMALLINT},
+      bclient_machinecode = #{record.bclientMachinecode,jdbcType=VARCHAR},
+      bauth_serilizenumber = #{record.bauthSerilizenumber,jdbcType=VARCHAR},
+      contractnumber = #{record.contractnumber,jdbcType=VARCHAR},
+      supervene_number = #{record.superveneNumber,jdbcType=VARCHAR},
+      auth_timeout = #{record.authTimeout,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.easted.edm.core.model.TAuthmanagement" >
+    update authmanagement
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="product != null" >
+        product = #{product,jdbcType=VARCHAR},
+      </if>
+      <if test="serinumber != null" >
+        serinumber = #{serinumber,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null" >
+        date = #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="authorizationcode != null" >
+        authorizationcode = #{authorizationcode,jdbcType=VARCHAR},
+      </if>
+      <if test="servernumber != null" >
+        servernumber = #{servernumber,jdbcType=VARCHAR},
+      </if>
+      <if test="aclient != null" >
+        aclient = #{aclient,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="bclientMachinecode != null" >
+        bclient_machinecode = #{bclientMachinecode,jdbcType=VARCHAR},
+      </if>
+      <if test="bauthSerilizenumber != null" >
+        bauth_serilizenumber = #{bauthSerilizenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="contractnumber != null" >
+        contractnumber = #{contractnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="superveneNumber != null" >
+        supervene_number = #{superveneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="authTimeout != null" >
+        auth_timeout = #{authTimeout,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.easted.edm.core.model.TAuthmanagement" >
+    update authmanagement
+    set name = #{name,jdbcType=VARCHAR},
+      product = #{product,jdbcType=VARCHAR},
+      serinumber = #{serinumber,jdbcType=VARCHAR},
+      version = #{version,jdbcType=VARCHAR},
+      date = #{date,jdbcType=TIMESTAMP},
+      authorizationcode = #{authorizationcode,jdbcType=VARCHAR},
+      servernumber = #{servernumber,jdbcType=VARCHAR},
+      aclient = #{aclient,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      status = #{status,jdbcType=SMALLINT},
+      bclient_machinecode = #{bclientMachinecode,jdbcType=VARCHAR},
+      bauth_serilizenumber = #{bauthSerilizenumber,jdbcType=VARCHAR},
+      contractnumber = #{contractnumber,jdbcType=VARCHAR},
+      supervene_number = #{superveneNumber,jdbcType=VARCHAR},
+      auth_timeout = #{authTimeout,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

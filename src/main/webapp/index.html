@@ -1,0 +1,464 @@
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="./assets/images/favicon.ico">
+    <title>授权管理平台</title>
+    <!-- Bootstrap core CSS -->
+    <link href="./assets/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/app.css">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        .sidebar { width: 225px; position: fixed; top: 0; bottom: 0; left: 0; z-index: 1000; display: block; padding: 0 20px; overflow-x: hidden; overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */ background-color: #f5f5f5; border-right: 1px solid #eee; }
+
+        .navbar{    background: #f5f5f5;
+            border-radius: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;}
+
+        .nav-sidebar { margin-right: -21px; margin-bottom: 20px; margin-left: -20px; }
+
+        .nav-sidebar > li > a { padding-right: 20px; padding-left: 20px; }
+
+        .nav-sidebar > .active > a,
+        .nav-sidebar > .active > a:hover,
+        .nav-sidebar > .active > a:focus { color: #fff; background-color: #428bca; }
+
+        .main { padding: 75px 25px 25px; position: absolute;}
+
+        .main .page-header { margin-top: 0; }
+
+        .placeholders { margin-bottom: 30px; text-align: center; }
+
+        .placeholders h4 { margin-bottom: 0; }
+
+        .placeholder { margin-bottom: 20px; }
+
+        .placeholder img { display: inline-block; border-radius: 50%; }
+
+        .table { font-size: 14px; margin-bottom: 0;}
+
+        .add { margin-bottom: 20px; }
+
+        .table td a { cursor: pointer; text-decoration: none; }
+
+        .table td a + a { margin-left: 10px; }
+
+        .edit:hover, .delete:hover { text-decoration: none; }
+
+        .require { color: red; position: absolute; margin-top: -3px; }
+
+        #addform_dialog .modal-dialog { position: absolute; top: 50%; left: 50%; margin: -366px 0 0 -300px; }
+
+        #logout { cursor: pointer }
+
+        textarea { resize: none }
+
+        .pagination li a { cursor: pointer }
+
+        .form-group { margin-bottom: 20px; }
+        .navbar-brand {padding:9px 25px;}
+        .navbar-brand img{width: 30px; margin-right: 8px;display:inline-block}
+        .navbar-brand span{vertical-align: middle; color: #999; font-size: 16px; display: inline-block;font-family: "AvenirNext-Regular", "Helvetica Neue", "lucida grande", "PingFangHK-Light", "STHeiti", "Heiti SC", "Hiragino Sans GB", "Microsoft JhengHei", "Microsoft Yahei", SimHei, "WenQuanYi Micro Hei", "Droid Sans", "Roboto", Helvetica, Tahoma, Arial, "sans-serif";}
+        .modal span:focus{ outline:none;}
+    </style>
+</head>
+
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="main">
+            <nav class="navbar">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand"><img src="./assets/images/favicon.ico" alt=""><span>EASTED ADMIN</span></a>
+                    </div>
+                    <div id="navbar" class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a><span class="glyphicon glyphicon-user" style="margin-right: 10px"></span>admin</a></li>
+                            <li><a id="logout">注销</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div class="row">
+                <div class="col-sm-3">
+                    <button type="button" class="btn btn-primary add" data-toggle="modal" data-target="#addform_dialog"><span
+                            class="glyphicon glyphicon-plus" aria-hidden="true"></span> 新建
+                    </button>
+                </div>
+                <div class="col-sm-5 col-sm-offset-4 col-md-4 col-md-offset-5 col-lg-2 col-lg-offset-7">
+                    <div class="input-group">
+                        <div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
+                        <input type="text" class="form-control" id="search_all" placeholder="请输入搜索内容">
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered table-hover" id="list">
+                    <thead>
+                    <tr>
+                        <th>A级客户</th>
+                        <th>软件产品</th>
+                        <th>规格</th>
+                        <th>产品序列号</th>
+                        <th>产品授权码</th>
+                        <th>产品服务号</th>
+                        <th>B级客户机器码</th>
+                        <th>B级授权序列号</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td colspan="9" align="center">暂无数据</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <nav aria-label="Page navigation" class="text-right">
+                    <ul class="pagination" id="page">
+                        <li class="disabled">
+                            <a aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="disabled">
+                            <a aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="addform_dialog" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">新建</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="aClient" class="col-sm-3 control-label">A级客户：
+                                <span class="require">*</span>
+                            </label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="aClient" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="product" class="col-sm-3 control-label">软件产品：
+                                <span class="require">*</span>
+                            </label>
+                            <div class="col-sm-8">
+                                <select class="form-control" id="product">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="type" class="col-sm-3 control-label">规格：
+                                <span class="require">*</span>
+                            </label>
+                            <div class="col-sm-8">
+                                <select class="form-control" id="type">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="serinumber" class="col-sm-3 control-label">产品序列号：
+                                <span class="require">*</span>
+                            </label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="serinumber" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="authorizationcode" class="col-sm-3 control-label">产品授权码：
+                                <span class="require">*</span>
+                            </label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="authorizationcode" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="servernumber" class="col-sm-3 control-label">产品服务号：
+                                <span class="require">*</span>
+                            </label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="servernumber" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="superveneNumber" class="col-sm-3 control-label">并发数：
+                                <span class="require">*</span>
+                            </label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="superveneNumber" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="date" class="col-sm-3 control-label">授权日期：
+                                <span class="require">*</span>
+                            </label>
+                            <div class="col-sm-8">
+                                <input type="date" class="form-control" id="date" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="bClientMachinecode" class="col-sm-3 control-label">B级客户机器码：
+                                <span class="require">*</span>
+                            </label>
+                            <div class="col-sm-8">
+                                <textarea rows="2" class="form-control" id="bClientMachinecode" autocomplete="off"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="bAuthSerilizenumber" class="col-sm-3 control-label">B级授权序列号 ：
+                                <span class="require">*</span>
+                            </label>
+                            <div class="col-sm-8">
+                                <textarea rows="2" class="form-control" id="bAuthSerilizenumber" autocomplete="off"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="submitAdd">确定</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</div>
+
+<script src="./assets/js/jquery-1.12.4.min.js"></script>
+<script src="./assets/js/bootstrap.min.js"></script>
+<script src="./assets/js/app.js"></script>
+<script>
+    $(document).ready(function () {
+        // 列表条件对象
+        var dataListOpts = {
+            all: '',
+            start: 0,
+            pageSize: Math.floor(($(document).height() - 268) / 41)
+        }
+        // 添加授权对象
+        var addForm = {
+            aClient: '',
+            product: '',
+            type: '',
+            serinumber: '',
+            authorizationcode: '',
+            servernumber: '',
+            date: '',
+            superveneNumber: '',
+            bAuthSerilizenumber: '',
+            bClientMachinecode: ''
+        }
+        // 获取列表
+        function getdataList(opts) {
+            $.post(App.ajaxUrl + '/auth/list', opts, function (res) {
+                if (res.code === '200') {
+                    var _html = [];
+                    $.each(res.data.dataList, function (k, v) {
+                        _html.push('<tr id="' + v.id + '">')
+                        _html.push('<td data-toggle="tooltip" data-placement="bottom" title="' + v.aClient + '">' + v.aClient + '</td>')
+                        _html.push('<td data-toggle="tooltip" data-placement="bottom" title="' + v.product + '">' + v.product+ '</td>')
+                        _html.push('<td data-toggle="tooltip" data-placement="bottom" title="' + v.type + '">' + v.type + '</td>')
+                        _html.push('<td data-toggle="tooltip" data-placement="bottom" title="' + v.serinumber + '">' + v.serinumber + '</td>')
+                        _html.push('<td data-toggle="tooltip" data-placement="bottom" title="' + v.authorizationcode + '">' + v.authorizationcode + '</td>')
+                        _html.push('<td data-toggle="tooltip" data-placement="bottom" title="' + v.servernumber + '">' + v.servernumber + '</td>')
+                        _html.push('<td data-toggle="tooltip" data-placement="bottom" title="' + v.bClientMachinecode + '">' + v.bClientMachinecode + '</td>')
+                        _html.push('<td data-toggle="tooltip" data-placement="bottom" title="' + v.bAuthSerilizenumber + '">' + v.bAuthSerilizenumber + '</td>')
+                        _html.push('<td><a class="glyphicon glyphicon-eye-open detail" title="查看" data-toggle="modal"data-target="#addform_dialog"></a><a class="glyphicon glyphicon-pencil edit" title="编辑" data-toggle="modal"data-target="#addform_dialog"></a><a class="glyphicon glyphicon-trash delete"title="删除"></a></td>')
+                        _html.push('</tr>')
+                    })
+                    if (res.data.dataList.length === 0) {
+                        _html.push('<tr><td colspan="9" align="center">暂无数据</td></tr>')
+                    }
+                    $('#list tbody').html(_html.join(''))
+                    var page = Math.ceil(res.data.count / dataListOpts.pageSize),
+                        _pages = ['<li class="' + (opts.start === 0 && 'disabled') + '"><a class="prev" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>']
+                    for (var i = (Math.floor(opts.start/opts.pageSize) - 5 > 1 ? Math.floor(opts.start/opts.pageSize) : 1); i <= page; i++) {
+                        _pages.push('<li class="' + ((i - 1) * opts.pageSize === opts.start && 'active') + '"><a class="page">' + i + '</a></li>')
+                    }
+                    _pages.push('<li class="' + (opts.start + opts.pageSize >= res.data.count && 'disabled') + '"><a class="next" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>')
+                    $('#page').html(_pages.join(''))
+                } else {
+                    App.alert(res.msg)
+                }
+            })
+        }
+
+        function getSelect() {
+            $.get(App.ajaxUrl + '/auth/productversionlist', function (res) {
+                if (res.code === '200') {
+                    var _product = [], _type = [];
+                    $.each(res.data.products, function (k, v) {
+                        _product.push('<option value="' + v + '">' + v + '</option>')
+                    })
+                    $.each(res.data.types, function (k, v) {
+                        _type.push('<option value="' + v + '">' + v + '</option>')
+                    })
+                    $('#product').html(_product.join(''))
+                    $('#type').html(_type.join(''))
+                } else {
+                    App.alert(res.msg)
+                }
+            })
+        }
+
+        function validateForm(callback) {
+            var flag = true
+            $('#addform_dialog .form-control-error').removeClass('form-control-error');
+            $('#addform_dialog .has-error').remove();
+            $.each(addForm, function (k, v) {
+                if ($('#' + k).val() === '') {
+                    flag = false
+                    $('#' + k).addClass('form-control-error').parent().append('<span class="has-error">请输入' + $('#' + k).parent().prev().text().replace('：', '').replace('*', '') + '</span>')
+                    $('#addform_dialog .has-error').show();
+                }
+                if ((k === 'servernumber'||k === 'superveneNumber') && !new RegExp("^[0-9]*$").test($('#' + k).val())) {
+                    flag = false
+                    $('#' + k).addClass('form-control-error').parent().append('<span class="has-error">' + $('#' + k).parent().prev().text().replace('：', '').replace('*', '') + '必须为数字</span>')
+                    $('#addform_dialog .has-error').show();
+                }
+                addForm[k] = $('#' + k).val();
+            })
+            if (flag) {
+                callback && callback()
+            }
+        }
+        function validateLi(e) {
+            e.removeClass('form-control-error').siblings('.has-error').remove()
+            if(e.val() === '') {
+                e.addClass('form-control-error').parent().append('<span class="has-error">请输入' + e.parent().prev().text().replace('：', '').replace('*', '') + '</span>');
+                $('#addform_dialog .has-error').show();
+            }
+            if ((e.attr('id') === 'servernumber'||e.attr('id') === 'superveneNumber') && !new RegExp("^[0-9]*$").test(e.val())) {
+                e.addClass('form-control-error').parent().append('<span class="has-error">' + e.parent().prev().text().replace('：', '').replace('*', '') + '必须为数字</span>');
+                $('#addform_dialog .has-error').show();
+            }
+        }
+
+        getSelect()
+        getdataList(dataListOpts)
+
+        // 模态框show事件
+        $('#addform_dialog').on('show.bs.modal', function (e) {
+            $('#addform_dialog .modal-title').html($(e.relatedTarget).hasClass('edit') ? '编辑信息' : ($(e.relatedTarget).hasClass('detail') ? '查看信息' : '新建信息'))
+            // 获取当前授权信息详情
+            if (!$(e.relatedTarget).hasClass('add')) {
+                $('#addform_dialog').attr('did', $(e.relatedTarget).parents('tr').attr('id'))
+                $.get(App.ajaxUrl + '/auth/editbefore?id=' + $(e.relatedTarget).parents('tr').attr('id'), function (res) {
+                    if (res.code === '200') {
+                        $.each(res.data, function (k, v) {
+                            $('#' + k) && $('#' + k).val(v).prop('disabled', $(e.relatedTarget).hasClass('detail'))
+                        })
+                        $('#date').val(App.formatterTime(res.data.date))
+                        $('#addform_dialog .modal-footer').toggle(!$(e.relatedTarget).hasClass('detail'))
+                    } else {
+                        App.alert(res.msg)
+                    }
+                })
+            } else {
+                $('#addform_dialog').attr('did', '')
+            }
+        })
+        // 模态框hidden事件
+        $('#addform_dialog').on('hidden.bs.modal', function (e) {
+            $('#addform_dialog .form-control-error').removeClass('form-control-error');
+            $('#addform_dialog .has-error').remove();
+            $.each(addForm, function (k, v) {
+                $('#' + k).val('').prop('disabled',false)
+            })
+            $("#product").val($("#product option:first-child").attr('value'))
+            $("#type").val($("#type option:first-child").attr('value'))
+        })
+        // 点击提交按钮事件
+        $('#submitAdd').click(function () {
+            validateForm(function () {
+                addForm.id = $('#addform_dialog').attr('did')
+                $.post(App.ajaxUrl + '/auth/' + ($('#addform_dialog').attr('did') !== '' ? 'update' : 'add'), addForm, function (res) {
+                    if (res.code === '200') {
+                        App.alert(($('#addform_dialog').attr('did') !== '' ? '编辑' : '新建') + '授权成功', 'success')
+                        $('#addform_dialog').modal('hide')
+                        getdataList(dataListOpts)
+                    } else {
+                        App.alert(res.msg)
+                    }
+                })
+            })
+        })
+        $("#addform_dialog .form-control").blur(function () {
+            validateLi($(this))
+        })
+        // 点击删除事件
+        $('#list').on('click', '.delete', function () {
+            var id = $(this).parents('tr').attr('id')
+            App.confirm('删除授权', '确定删除该授权？', function () {
+                $.ajax({
+                    type: 'DELETE',
+                    url: App.ajaxUrl + '/auth/delete?id=' + id,
+                    success: function (res) {
+                        if (res.code === '200') {
+                            App.alert('删除授权成功', 'success')
+                            getdataList(dataListOpts)
+                        } else {
+                            App.alert(res.msg)
+                        }
+                    }
+                })
+            })
+        })
+        // 搜索框input事件
+        $("#search_all").on('input', function () {
+            dataListOpts.all = $(this).val()
+            getdataList(dataListOpts)
+        })
+        // 换页事件
+        $('#page').on('click', 'a', function () {
+            if ($(this).hasClass('page')) {
+                dataListOpts.start = (parseInt($(this).html()) - 1) * dataListOpts.pageSize
+                getdataList(dataListOpts)
+            } else if ($(this).hasClass('prev')) {
+                $('#page li.active').prev().find('a.page').trigger('click')
+            } else if ($(this).hasClass('next')) {
+                $('#page li.active').next().find('a.page').trigger('click')
+            }
+        })
+        // 注销按钮点击事件
+        $("#logout").click(function () {
+            App.confirm('退出登录', '确定退出登录？', function () {
+                $.get(App.ajaxUrl + '/logout', function (res) {
+                    if (res.code === '200') {
+                        window.location.href = './login.html'
+                    } else {
+                        App.alert(res.msg)
+                    }
+                })
+            })
+        })
+    })
+</script>
+
+</body>
+</html>

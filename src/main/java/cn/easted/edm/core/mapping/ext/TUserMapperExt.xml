@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- mapper元素需要有一个唯一的namespace属性，必须为对应的Mapper接口全名。 -->
+<!-- 每个sql语句定义都有一个id，必须与对应的Mapper接口中方法同名，可以指定参数类型和返回类型。 -->
+<!-- 每个sql语句可以定义parameterType和resultType指定参数和返回值类型，也可单独定义parameterMap(见后面的存储过程部分)和resultMap元素然后在sql语句元素中引用。  -->
+<mapper namespace="cn.easted.edm.core.dao.ext.TUserMapperExt" >
+  <resultMap id="BaseResultMap" type="cn.easted.edm.core.model.TUser" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="nickname" property="nickname" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="BIGINT" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="usergroups" property="usergroups" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="BIGINT" />
+    <result column="userroles" property="userroles" jdbcType="VARCHAR" />
+    <result column="uuid" property="uuid" jdbcType="VARCHAR" />
+    <result column="domainentryid" property="domainentryid" jdbcType="VARCHAR" />
+    <result column="domain" property="domain" jdbcType="VARCHAR" />
+    <result column="lastlogin" property="lastlogin" jdbcType="TIMESTAMP" />
+    <result column="sessionstatus" property="sessionstatus" jdbcType="VARCHAR" />
+    <result column="version" property="version" jdbcType="BIGINT" />
+    <result column="reserve" property="reserve" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+     <trim prefix="(" suffix=")" prefixOverrides="and" >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+       </trim>
+		and id in(select max(id) from t_user group by domainentryid)
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, username, nickname, password, status, createtime, usergroups, email, phone, type, 
+    userroles, uuid, domainentryid, domain, lastlogin, sessionstatus, version, reserve
+  </sql>
+  
+  <select id="getUndistributedResUser"  >
+    select 
+    <include refid="Base_Column_List" />
+    from t_user
+    where id not in (
+    	select res_per.ownerid t_resource_permission res_per 
+    		where res_per.ownertype=1 and res_per.local=false
+    	)  
+    and type=1
+  </select>
+  
+  <update id="updatePwdByUserName"  >
+    update t_user
+    <set >
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where username = #{username,jdbcType=BIGINT}
+  </update>
+  
+   <update id="updateSessionstatusStatus">
+    update t_user
+    <set >
+      <if test="sessionstatus != null" >
+        sessionstatus = #{sessionstatus,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where username = #{username,jdbcType=BIGINT} and domain=#{domain,jdbcType=BIGINT}
+  </update>
+  
+  <update id="asyncSessionstatusStatus">
+    update t_user
+    <set >
+      <if test="sessionstatus != null" >
+        sessionstatus = #{sessionstatus,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where 
+    	username not in (select tu.username from  t_client_user tu) 
+    	and domain not in (select tu.userdomain from  t_client_user tu) and type !='0'
+  </update>
+  
+  
+  <select id="selectDomainsByUser" resultType="java.lang.String">
+  	select domain
+	FROM t_user
+	GROUP BY domain
+  </select>
+  
+  <select id="countByExampleGroupByDomainentryid" parameterType="cn.easted.edm.core.model.TUserExample" resultType="java.lang.Integer" >
+    select count(*) from t_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  
+  <select id="selectByExampleGroupByDomainentryid" resultMap="BaseResultMap" parameterType="cn.easted.edm.core.model.TUserExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="offset != null and offset>=0" >
+      limit #{limit} offset #{offset}
+    </if>
+  </select>
+  
+   <select id="countTUserByDomainentryid" parameterType="cn.easted.edm.core.model.TUserExample" resultType="java.lang.Integer" >
+     select count(*) from t_user where id in(select max(id)  from t_user   where type=1  group by domainentryid)
+  </select>
+  
+  <select id="selectUserByid" resultType="java.lang.Long"  parameterType="java.lang.Long">
+     select 
+    u.id
+    from t_user u,t_user tem
+    where  tem.id=#{id} and u.username=tem.username and u.domain=tem.domain and u.type !='0'
+  </select>
+</mapper>

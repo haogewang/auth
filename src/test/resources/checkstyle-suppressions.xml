@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suppressions PUBLIC
+        "-//Puppy Crawl//DTD Suppressions 1.0//EN"
+        "http://www.puppycrawl.com/dtds/suppressions_1_0.dtd">
+
+<suppressions>
+    <suppress checks="[a-zA-Z0-9]*" files="([^(easted)])+([a-z]*[\\/]core[\\/]dao[\\/])+"/>
+    <suppress checks="[a-zA-Z0-9]*" files="([^(easted)])+([a-z]*[\\/]core[\\/]dao[\\/]ext[\\/])+"/>
+    <suppress checks="[a-zA-Z0-9]*" files="([^(easted)])+([a-z]*[\\/]core[\\/]engine[\\/])+"/>
+    <suppress checks="[a-zA-Z0-9]*" files="([^(easted)])+([a-z]*[\\/]core[\\/]fastjson[\\/])+"/>
+    <suppress checks="[a-zA-Z0-9]*" files="([^(easted)])+([a-z]*[\\/]core[\\/]generic[\\/])+"/>
+    <suppress checks="[a-zA-Z0-9]*" files="([^(easted)])+([a-z]*[\\/]core[\\/]mapping[\\/])+"/>
+    <suppress checks="[a-zA-Z0-9]*" files="([^(easted)])+([a-z]*[\\/]core[\\/]mapping[\\/]ext[\\/])+"/>
+    <suppress checks="[a-zA-Z0-9]*" files="([^(easted)])+([a-z]*[\\/]core[\\/]model[\\/])+"/>
+    <suppress checks="[a-zA-Z0-9]*" files="([^(easted)])+([a-z]*[\\/]core[\\/]model[\\/]dto[\\/])+"/>
+    <suppress checks="[a-zA-Z0-9]*" files="([^(easted)])+([a-z]*[\\/]core[\\/]security[\\/])+"/>
+    <suppress checks="[a-zA-Z0-9]*" files="([^(easted)])+([a-z]*[\\/]core[\\/]utils[\\/])+"/>
+
+    <suppress checks="[a-zA-Z0-9]*" files="([^(easted)])+([a-z]*[\\/]web[\\/]api[\\/])+"/>
+    <suppress checks="[a-zA-Z0-9]*" files="([^(easted)])+([a-z]*[\\/]web[\\/]task[\\/])+"/>
+    <suppress checks="[a-zA-Z0-9]*" files="CloudDesktopController.java"/>
+    <suppress checks="[a-zA-Z0-9]*" files="CommonController.java"/>
+    <suppress checks="[a-zA-Z0-9]*" files="ConfigResourceController.java"/>
+    <suppress checks="[a-zA-Z0-9]*" files="ConfigureController.java"/>
+    <suppress checks="[a-zA-Z0-9]*" files="DashboardController.java"/>
+    <suppress checks="[a-zA-Z0-9]*" files="GroupController.java"/>
+    <suppress checks="[a-zA-Z0-9]*" files="LogController.java"/>
+    <suppress checks="[a-zA-Z0-9]*" files="PageController.java"/>
+    <suppress checks="[a-zA-Z0-9]*" files="ResourceController.java"/>
+    <suppress checks="[a-zA-Z0-9]*" files="StrategyController.java"/>
+    <suppress checks="[a-zA-Z0-9]*" files="TClientManagerController.java"/>
+    <suppress checks="[a-zA-Z0-9]*" files="UserController.java"/>
+    <suppress checks="[a-zA-Z0-9]*" files="VmPoolController.java"/>
+    
+    <suppress checks="[a-zA-Z0-9]*" files="AynscEcenterServiceImpl.java"/>
+    <suppress checks="[a-zA-Z0-9]*" files="CloudDesktopServiceImpl.java"/>
+    <suppress checks="[a-zA-Z0-9]*" files="DashboardServiceImpl.java"/>
+    <suppress checks="[a-zA-Z0-9]*" files="DbFacadeFactoryImpl.java"/>
+    <suppress checks="[a-zA-Z0-9]*" files="DeviceManagerServiceImpl.java"/>
+    <suppress checks="[a-zA-Z0-9]*" files="DictServiceImpl.java"/>
+    <suppress checks="[a-zA-Z0-9]*" files="ECenterServiceImpl.java"/>
+    <suppress checks="[a-zA-Z0-9]*" files="GroupServiceImpl.java"/>
+    <suppress checks="[a-zA-Z0-9]*" files="LogServiceImpl.java"/>
+    <suppress checks="[a-zA-Z0-9]*" files="PermissionServiceImpl.java"/>
+    <suppress checks="[a-zA-Z0-9]*" files="ResourcePermissionServiceImpl.java"/>
+    <suppress checks="[a-zA-Z0-9]*" files="RoleServiceImpl.java"/>
+    <suppress checks="[a-zA-Z0-9]*" files="SdkFactoryImpl.java"/>
+    <suppress checks="[a-zA-Z0-9]*" files="StrategyServiceImpl.java"/>
+    <suppress checks="[a-zA-Z0-9]*" files="UserServiceImpl.java"/>
+    <suppress checks="[a-zA-Z0-9]*" files="VmPoolServiceImpl.java"/>
+    
+    
+     <suppress checks="[a-zA-Z0-9]*" files="AynscEcenterService.java"/>
+    <suppress checks="[a-zA-Z0-9]*" files="CloudDesktopService.java"/>
+    <suppress checks="[a-zA-Z0-9]*" files="DashboardService.java"/>
+    <suppress checks="[a-zA-Z0-9]*" files="DbFacadeFactory.java"/>
+    <suppress checks="[a-zA-Z0-9]*" files="DeviceManagerService.java"/>
+    <suppress checks="[a-zA-Z0-9]*" files="DictService.java"/>
+    <suppress checks="[a-zA-Z0-9]*" files="ECenterService.java"/>
+    <suppress checks="[a-zA-Z0-9]*" files="GroupService.java"/>
+    <suppress checks="[a-zA-Z0-9]*" files="LogService.java"/>
+    <suppress checks="[a-zA-Z0-9]*" files="PermissionService.java"/>
+    <suppress checks="[a-zA-Z0-9]*" files="ResourcePermissionService.java"/>
+    <suppress checks="[a-zA-Z0-9]*" files="RoleService.java"/>
+    <suppress checks="[a-zA-Z0-9]*" files="SdkFactory.java"/>
+    <suppress checks="[a-zA-Z0-9]*" files="StrategyService.java"/>
+    <suppress checks="[a-zA-Z0-9]*" files="UserService.java"/>
+    <suppress checks="[a-zA-Z0-9]*" files="VmPoolService.java"/>
+    
+</suppressions>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FindBugsFilter>
+	<Match>
+	   	<Package name="~.*\.dao"/>
+	</Match>
+	<Match>
+	   	<Package name="~.*\.engine"/>
+	</Match>
+	<Match>
+	   	<Package name="~.*\.fastjson"/>
+	</Match>
+	<Match>
+	   	<Package name="~.*\.fastjson.argumentResolver"/>
+	</Match>
+	<Match>
+	   <Package name="~.*\.generic"/>
+	</Match>
+	<Match>
+	   	<Package name="~.*\.generic.enums"/>
+	</Match>
+	<Match>
+	   	<Package name="~.*\.mapping"/>
+	</Match>
+	<Match>
+	   	<Package name="~.*\.model"/>
+	</Match>
+	<Match>
+	   	<Package name="~.*\.security"/>
+	</Match>
+	<Match>
+	   	<Package name="~.*\.utils"/>
+	</Match>
+	<Match>
+	   	<Package name="~.*\.api"/>
+	</Match>
+	<Match>
+	   	<Package name="~.*\.task"/>
+	</Match>
+	
+	<Match>
+	   	<Class name="~.*\.AynscEcenterServiceImpl"/>
+	</Match>
+	<Match>
+	   	<Class name="~.*\.CloudDesktopServiceImpl"/>
+	</Match>
+	<Match>
+	   	<Class name="~.*\.DashboardServiceImpl"/>
+	</Match>
+	<Match>
+	   	<Class name="~.*\.DbFacadeFactoryImpl"/>
+	</Match>
+	<Match>
+	   	<Class name="~.*\.DeviceManagerServiceImpl"/>
+	</Match>
+	<Match>
+	   	<Class name="~.*\.DictServiceImpl"/>
+	</Match>
+	<Match>
+	   	<Class name="~.*\.ECenterServiceImpl"/>
+	</Match>
+	<Match>
+	   	<Class name="~.*\.GroupServiceImpl"/>
+	</Match>
+	<Match>
+	   	<Class name="~.*\.LogServiceImpl"/>
+	</Match>
+	<Match>
+	   	<Class name="~.*\.PermissionServiceImpl"/>
+	</Match>
+	<Match>
+	   	<Class name="~.*\.ResourcePermissionServiceImpl"/>
+	</Match>
+	<Match>
+	   	<Class name="~.*\.RoleServiceImpl"/>
+	</Match>
+	<Match>
+	   	<Class name="~.*\.SdkFactoryImpl"/>
+	</Match>
+	<Match>
+	   	<Class name="~.*\.StrategyServiceImpl"/>
+	</Match>
+	<Match>
+	   	<Class name="~.*\.UserServiceImpl"/>
+	</Match>
+	<Match>
+	   	<Class name="~.*\.VmPoolServiceImpl"/>
+	</Match>
+	
+	<Match>
+	   	<Class name="~.*\.CommonController"/>
+	</Match>
+	<Match>
+	   	<Class name="~.*\.ConfigResourceController"/>
+	</Match>
+	<Match>
+	   	<Class name="~.*\.GroupController"/>
+	</Match>
+	<Match>
+	   	<Class name="~.*\.ResourceController"/>
+	</Match>
+	<Match>
+	   	<Class name="~.*\.StrategyController"/>
+	</Match>
+	<Match>
+	   	<Class name="~.*\.UserController"/>
+	</Match>
+	<Match>
+	   	<Class name="~.*\.VmPoolController"/>
+	</Match>
+	<Match>
+	   	<Class name="~.*\.LogController"/>
+	</Match>
+	
+</FindBugsFilter>
